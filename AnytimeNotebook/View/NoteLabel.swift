@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MemoLabel: UILabel {
+class NoteLabel: UILabel {
 
   /// 文字显示位置
   enum VerticalAlignment: Int {

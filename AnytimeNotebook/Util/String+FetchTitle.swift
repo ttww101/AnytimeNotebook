@@ -11,22 +11,22 @@ import Foundation
 extension String {
 
   func fetchTitle() -> String {
-    var title: String
-    let range = self.range(of: "\n")
-    if range != nil {
-      title = self.substring(to: range!.lowerBound)
-      if title.characters.count > 0 {
-        return title
+    var myTitle: String
+    let myRange = self.range(of: "\n")
+    if myRange != nil {
+      myTitle = self.substring(to: myRange!.lowerBound)
+      if myTitle.characters.count > 0 {
+        return myTitle
       }
     }
 
     let text: NSString = self as NSString
     if text.length > 15 {
-      title = text.substring(to: 15)
+      myTitle = text.substring(to: 15)
     } else {
-      title = self
+      myTitle = self
     }
-    return title
+    return myTitle
   }
 
 }

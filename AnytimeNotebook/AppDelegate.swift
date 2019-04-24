@@ -22,9 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var navigationController: UINavigationController?
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-    let mainController = MemoListViewController()
+    let mainController = NoteListViewController()
     navigationController = UINavigationController(rootViewController: mainController)
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.backgroundColor = UIColor.white
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ENSession.setSharedSessionConsumerKey("fdkj", consumerSecret: "5d9c48ed3038472d", optionalHost: nil)
     ENSession.shared.fetchSimpleMemoNoteBook()
 
-    UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: SMColor.title]
+    UINavigationBar.appearance().titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: SMColor.title])
 
     return true
   }
@@ -49,11 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applicationDidEnterBackground(_ application: UIApplication) {
-    CoreDataStack.default.saveContext()
+    NotebookCoreDataStack.default.saveContext()
   }
 
   func applicationWillTerminate(_ application: UIApplication) {
-    CoreDataStack.default.saveContext()
+    NotebookCoreDataStack.default.saveContext()
   }
 
   func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     case .paste:
       text = UIPasteboard.general.string
     }
-    let memoVC =  MemoViewController(text: text)
+    let memoVC =  NoteViewController(text: text)
     navigationController?.pushViewController(memoVC, animated: true)
     completionHandler(handle)
   }
@@ -97,7 +97,7 @@ private extension AppDelegate {
     for memoText in memos {
       let memo = Memo.newMemo()
       memo.text = memoText
-      CoreDataStack.default.saveContext()
+      NotebookCoreDataStack.default.saveContext()
     }
   }
 
@@ -105,7 +105,7 @@ private extension AppDelegate {
     let oldMemos = UserDefaults.standard.object(forKey: "OldMemos") as? String
     if oldMemos != nil { return }
 
-    let memos = OldCoreDataStack.sharded.fetchOldMemos()
+    let memos = OldOfCoreDataStack.sharded.fetchOldMemos()
     for memo in memos {
       let newMemo = Memo.newMemo()
       newMemo.createDate = memo.changeDate
@@ -115,7 +115,13 @@ private extension AppDelegate {
       newMemo.noteRef = memo.noteRef
     }
 
-    CoreDataStack.default.saveContext()
+    NotebookCoreDataStack.default.saveContext()
     UserDefaults.standard.set("OldMemos", forKey: "OldMemos")
   }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

@@ -9,9 +9,9 @@
 import Foundation
 import CoreData
 
-class CoreDataStack {
+class NotebookCoreDataStack {
 
-  static let `default` = CoreDataStack()
+  static let `default` = NotebookCoreDataStack()
 
   lazy var persistentContainer: NSPersistentContainer = {
     return self.fetchPersistentContainer(with: "SimpleMemo")

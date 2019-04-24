@@ -22,19 +22,19 @@
 		F4351DD01E62CC62001FE8A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4351DC71E62CC62001FE8A9 /* LaunchScreen.storyboard */; };
 		F4351DD11E62CC62001FE8A9 /* DefaultMemos.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4351DC91E62CC62001FE8A9 /* DefaultMemos.plist */; };
 		F4351DD41E62CC62001FE8A9 /* LaunchScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4351DCD1E62CC62001FE8A9 /* LaunchScreen.strings */; };
-		F44725F51E6E1F3200B674D5 /* OldCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44725F41E6E1F3200B674D5 /* OldCoreDataStack.swift */; };
+		F44725F51E6E1F3200B674D5 /* OldOfCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44725F41E6E1F3200B674D5 /* OldOfCoreDataStack.swift */; };
 		F44725F81E6E306A00B674D5 /* Memo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F44725F61E6E306A00B674D5 /* Memo.xcdatamodeld */; };
 		F468888A1E73E90300C2F8DF /* PrintLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A0414D1E618CA00012EAEF /* PrintLog.swift */; };
 		F49D67121E645A8E0014E284 /* SMNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49D67111E645A8E0014E284 /* SMNotification.swift */; };
-		F4A041501E618F910012EAEF /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A0414F1E618F910012EAEF /* MemoViewController.swift */; };
+		F4A041501E618F910012EAEF /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A0414F1E618F910012EAEF /* NoteViewController.swift */; };
 		F4A041531E61A3020012EAEF /* String+FetchTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A041521E61A3020012EAEF /* String+FetchTitle.swift */; };
 		F4A041551E61A3A90012EAEF /* Evernote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A041541E61A3A90012EAEF /* Evernote.swift */; };
 		F4BBE94D1E613F3900638C21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE94C1E613F3900638C21 /* AppDelegate.swift */; };
-		F4BBE9781E61531C00638C21 /* MemoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE9761E61531C00638C21 /* MemoCollectionViewController.swift */; };
-		F4BBE9791E61531C00638C21 /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE9771E61531C00638C21 /* MemoListViewController.swift */; };
-		F4BBE98A1E6164D100638C21 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE9891E6164D100638C21 /* CoreDataStack.swift */; };
-		F4BBE98E1E616DDD00638C21 /* MemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE98D1E616DDD00638C21 /* MemoCell.swift */; };
-		F4BBE9901E616E2700638C21 /* MemoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE98F1E616E2700638C21 /* MemoLabel.swift */; };
+		F4BBE9781E61531C00638C21 /* NoteCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE9761E61531C00638C21 /* NoteCollectionViewController.swift */; };
+		F4BBE9791E61531C00638C21 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE9771E61531C00638C21 /* NoteListViewController.swift */; };
+		F4BBE98A1E6164D100638C21 /* NotebookCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE9891E6164D100638C21 /* NotebookCoreDataStack.swift */; };
+		F4BBE98E1E616DDD00638C21 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE98D1E616DDD00638C21 /* NoteCell.swift */; };
+		F4BBE9901E616E2700638C21 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE98F1E616E2700638C21 /* NoteLabel.swift */; };
 		F4BBE9961E6182C400638C21 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE9941E6182C400638C21 /* Memo.swift */; };
 		F4C387031E717D6C00599416 /* SMStoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C387021E717D6C00599416 /* SMStoreClient.swift */; };
 /* End PBXBuildFile section */
@@ -86,20 +86,20 @@
 		F4351DC91E62CC62001FE8A9 /* DefaultMemos.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultMemos.plist; sourceTree = "<group>"; };
 		F4351DCA1E62CC62001FE8A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4351DCE1E62CC62001FE8A9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		F44725F41E6E1F3200B674D5 /* OldCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldCoreDataStack.swift; sourceTree = "<group>"; };
+		F44725F41E6E1F3200B674D5 /* OldOfCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldOfCoreDataStack.swift; sourceTree = "<group>"; };
 		F44725F71E6E306A00B674D5 /* Memo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Memo.xcdatamodel; sourceTree = "<group>"; };
 		F49D67111E645A8E0014E284 /* SMNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMNotification.swift; sourceTree = "<group>"; };
 		F4A0414D1E618CA00012EAEF /* PrintLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrintLog.swift; path = ../AnytimeNotebook/Util/PrintLog.swift; sourceTree = "<group>"; };
-		F4A0414F1E618F910012EAEF /* MemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
+		F4A0414F1E618F910012EAEF /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		F4A041521E61A3020012EAEF /* String+FetchTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FetchTitle.swift"; sourceTree = "<group>"; };
 		F4A041541E61A3A90012EAEF /* Evernote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evernote.swift; sourceTree = "<group>"; };
 		F4BBE9491E613F3900638C21 /* AnytimeNotebook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnytimeNotebook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4BBE94C1E613F3900638C21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F4BBE9761E61531C00638C21 /* MemoCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoCollectionViewController.swift; sourceTree = "<group>"; };
-		F4BBE9771E61531C00638C21 /* MemoListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
-		F4BBE9891E6164D100638C21 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		F4BBE98D1E616DDD00638C21 /* MemoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoCell.swift; sourceTree = "<group>"; };
-		F4BBE98F1E616E2700638C21 /* MemoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoLabel.swift; sourceTree = "<group>"; };
+		F4BBE9761E61531C00638C21 /* NoteCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCollectionViewController.swift; sourceTree = "<group>"; };
+		F4BBE9771E61531C00638C21 /* NoteListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
+		F4BBE9891E6164D100638C21 /* NotebookCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotebookCoreDataStack.swift; sourceTree = "<group>"; };
+		F4BBE98D1E616DDD00638C21 /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
+		F4BBE98F1E616E2700638C21 /* NoteLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteLabel.swift; sourceTree = "<group>"; };
 		F4BBE9941E6182C400638C21 /* Memo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		F4C387021E717D6C00599416 /* SMStoreClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMStoreClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -224,9 +224,9 @@
 		F4BBE9751E61531C00638C21 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F4BBE9761E61531C00638C21 /* MemoCollectionViewController.swift */,
-				F4BBE9771E61531C00638C21 /* MemoListViewController.swift */,
-				F4A0414F1E618F910012EAEF /* MemoViewController.swift */,
+				F4BBE9761E61531C00638C21 /* NoteCollectionViewController.swift */,
+				F4BBE9771E61531C00638C21 /* NoteListViewController.swift */,
+				F4A0414F1E618F910012EAEF /* NoteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -234,8 +234,8 @@
 		F4BBE97B1E61532C00638C21 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F4BBE98D1E616DDD00638C21 /* MemoCell.swift */,
-				F4BBE98F1E616E2700638C21 /* MemoLabel.swift */,
+				F4BBE98D1E616DDD00638C21 /* NoteCell.swift */,
+				F4BBE98F1E616E2700638C21 /* NoteLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -244,8 +244,8 @@
 			isa = PBXGroup;
 			children = (
 				F4BBE9941E6182C400638C21 /* Memo.swift */,
-				F4BBE9891E6164D100638C21 /* CoreDataStack.swift */,
-				F44725F41E6E1F3200B674D5 /* OldCoreDataStack.swift */,
+				F4BBE9891E6164D100638C21 /* NotebookCoreDataStack.swift */,
+				F44725F41E6E1F3200B674D5 /* OldOfCoreDataStack.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -317,12 +317,13 @@
 					F4351DAD1E6284C5001FE8A9 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = B4ABS8YVQL;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					F4BBE9481E613F3900638C21 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = SS76CD8QRS;
+						DevelopmentTeam = B4ABS8YVQL;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -332,6 +333,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hans",
@@ -442,19 +444,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4BBE98A1E6164D100638C21 /* CoreDataStack.swift in Sources */,
+				F4BBE98A1E6164D100638C21 /* NotebookCoreDataStack.swift in Sources */,
 				F4A041551E61A3A90012EAEF /* Evernote.swift in Sources */,
-				F4A041501E618F910012EAEF /* MemoViewController.swift in Sources */,
-				F4BBE9791E61531C00638C21 /* MemoListViewController.swift in Sources */,
+				F4A041501E618F910012EAEF /* NoteViewController.swift in Sources */,
+				F4BBE9791E61531C00638C21 /* NoteListViewController.swift in Sources */,
 				185DCB0522701A1700BED1B7 /* SimpleMemo.xcdatamodeld in Sources */,
-				F44725F51E6E1F3200B674D5 /* OldCoreDataStack.swift in Sources */,
+				F44725F51E6E1F3200B674D5 /* OldOfCoreDataStack.swift in Sources */,
 				F4BBE9961E6182C400638C21 /* Memo.swift in Sources */,
-				F4BBE9901E616E2700638C21 /* MemoLabel.swift in Sources */,
-				F4BBE9781E61531C00638C21 /* MemoCollectionViewController.swift in Sources */,
+				F4BBE9901E616E2700638C21 /* NoteLabel.swift in Sources */,
+				F4BBE9781E61531C00638C21 /* NoteCollectionViewController.swift in Sources */,
 				F44725F81E6E306A00B674D5 /* Memo.xcdatamodeld in Sources */,
 				F4BBE94D1E613F3900638C21 /* AppDelegate.swift in Sources */,
 				F4A041531E61A3020012EAEF /* String+FetchTitle.swift in Sources */,
-				F4BBE98E1E616DDD00638C21 /* MemoCell.swift in Sources */,
+				F4BBE98E1E616DDD00638C21 /* NoteCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,7 +509,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -531,7 +534,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.lijun.SMKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -638,13 +642,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = SS76CD8QRS;
+				DEVELOPMENT_TEAM = B4ABS8YVQL;
 				INFOPLIST_FILE = "$(SRCROOT)/AnytimeNotebook/Resource/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.likumb.Memo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuloo.anytimeNotebook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -654,14 +659,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = SS76CD8QRS;
+				DEVELOPMENT_TEAM = B4ABS8YVQL;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = "$(SRCROOT)/AnytimeNotebook/Resource/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.likumb.Memo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuloo.anytimeNotebook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

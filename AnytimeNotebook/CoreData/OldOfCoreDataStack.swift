@@ -9,9 +9,9 @@
 import CoreData
 import SMKit
 
-class OldCoreDataStack: NSObject {
+class OldOfCoreDataStack: NSObject {
 
-  static let sharded: OldCoreDataStack = OldCoreDataStack()
+  static let sharded: OldOfCoreDataStack = OldOfCoreDataStack()
 
   // MARK: - Core Data stack
 
@@ -67,7 +67,7 @@ class OldCoreDataStack: NSObject {
 
 }
 
-extension OldCoreDataStack {
+extension OldOfCoreDataStack {
 
   func fetchOldMemos() -> [Memo] {
     guard let context = self.managedObjectContext else {

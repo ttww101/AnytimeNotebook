@@ -29,7 +29,7 @@ extension Memo {
   }
 
   public class func newMemo() -> Memo {
-    let context = CoreDataStack.default.managedContext
+    let context = NotebookCoreDataStack.default.managedContext
     let entityDescription = NSEntityDescription.entity(forEntityName: "Memo", in: context)
     let memo = Memo(entity: entityDescription!, insertInto: context)
     memo.createDate = Date()

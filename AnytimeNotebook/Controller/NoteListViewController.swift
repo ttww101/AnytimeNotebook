@@ -15,12 +15,12 @@ import SnapKit
 private let backgroundColor = UIColor(r: 245, g: 245, b: 245)
 private let addBtnSize: CGFloat = 55
 
-class MemoListViewController: MemoCollectionViewController {
+class NoteListViewController: NoteCollectionViewController {
 
-  fileprivate lazy var searchView = UIView()
-  fileprivate var isSearching: Bool = false
-  fileprivate lazy var searchResults = [Memo]()
-  fileprivate lazy var searchBar = UISearchBar()
+  fileprivate lazy var mySearchView = UIView()
+  fileprivate var isSearching11: Bool = false
+  fileprivate lazy var mySearchResults = [Memo]()
+  fileprivate lazy var mySearchBar = UISearchBar()
 
   fileprivate let addButton: UIButton = {
     let button = UIButton(type: .custom)
@@ -36,19 +36,19 @@ class MemoListViewController: MemoCollectionViewController {
   fileprivate lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.text = "便签"
-    label.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+    label.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
     label.textColor = SMColor.title
     label.sizeToFit()
     return label
   }()
 
   fileprivate lazy var evernoteItem: UIBarButtonItem = {
-    let item = UIBarButtonItem(image: UIImage(named: "ENActivityIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(evernoteAuthenticate))
+    let item = UIBarButtonItem(image: UIImage(named: "ENActivityIcon"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(evernoteAuth))
     return item
   }()
 
   fileprivate lazy var searchItem: UIBarButtonItem = {
-    let item = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(search))
+    let item = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.search, target: self, action: #selector(search))
     return item
   }()
 
@@ -56,7 +56,7 @@ class MemoListViewController: MemoCollectionViewController {
     let request = Memo.defaultRequest()
     let sortDescriptor = NSSortDescriptor(key: "updateDate", ascending: false)
     request.sortDescriptors = [sortDescriptor]
-    let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataStack.default.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+    let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: NotebookCoreDataStack.default.managedContext, sectionNameKeyPath: nil, cacheName: nil)
     controller.delegate = self
     return controller
   }()
@@ -71,7 +71,7 @@ class MemoListViewController: MemoCollectionViewController {
       }
     }
     collectionView?.backgroundColor = backgroundColor
-    collectionView?.register(MemoCell.self, forCellWithReuseIdentifier: String(describing: MemoCell.self))
+    collectionView?.register(NoteCell.self, forCellWithReuseIdentifier: String(describing: NoteCell.self))
     setNavigationBar()
 
     addButton.addTarget(self, action: #selector(addMemo), for: .touchUpInside)
@@ -85,12 +85,12 @@ class MemoListViewController: MemoCollectionViewController {
       registerForPreviewing(with: self, sourceView: view)
     }
 
-    if SimpleMemoNoteBook != nil {
-      updateMemoFromEvernote()
+    if AnytimeNoteBook != nil {
+      updateMemoFromEn()
     }
 
-    NotificationCenter.default.addObserver(self, selector: #selector(updateMemoFromEvernote), name: SMNotification.SimpleMemoDidSetSimpleMemoNotebook, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(updateMemoFromEvernote), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(updateMemoFromEn), name: SMNotification.SimpleMemoDidSetSimpleMemoNotebook, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(updateMemoFromEn), name: UIApplication.didBecomeActiveNotification, object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -108,33 +108,33 @@ class MemoListViewController: MemoCollectionViewController {
 
 // MARK: - UICollectionViewDataSource Delegate
 
-extension MemoListViewController {
+extension NoteListViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return (isSearching ? searchResults.count :
+    return (isSearching11 ? mySearchResults.count :
       fetchedResultsController.fetchedObjects?.count ?? 0)
   }
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     // swiftlint:disable:next force_cast
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MemoCell.self), for: indexPath) as! MemoCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteCell.self), for: indexPath) as! NoteCell
 
-    let memo = isSearching ? searchResults[indexPath.row] : fetchedResultsController.object(at: indexPath)
-    cell.memo = memo
+    let memo = isSearching11 ? mySearchResults[indexPath.row] : fetchedResultsController.object(at: indexPath)
+    cell.myMemo = memo
     cell.deleteMemoAction = { memo in
-      let alert = UIAlertController(title: "删除便签", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-      alert.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: nil))
-      alert.addAction(UIAlertAction(title: "删除", style: UIAlertActionStyle.destructive, handler: { (action) -> Void in
+      let alert = UIAlertController(title: "删除便签", message: nil, preferredStyle: UIAlertController.Style.alert)
+      alert.addAction(UIAlertAction(title: "取消", style: UIAlertAction.Style.cancel, handler: nil))
+      alert.addAction(UIAlertAction(title: "删除", style: UIAlertAction.Style.destructive, handler: { (action) -> Void in
         ENSession.shared.deleteFromEvernote(with: memo)
-        CoreDataStack.default.managedContext.delete(memo)
-        CoreDataStack.default.saveContext()
+        NotebookCoreDataStack.default.managedContext.delete(memo)
+        NotebookCoreDataStack.default.saveContext()
       }))
       self.present(alert, animated: true, completion: nil)
     }
 
     cell.didSelectedMemoAction = { memo in
-      let MemoView = MemoViewController()
+      let MemoView = NoteViewController()
       MemoView.memo = memo
       self.navigationController?.pushViewController(MemoView, animated: true)
     }
@@ -142,21 +142,21 @@ extension MemoListViewController {
   }
 }
 
-private extension MemoListViewController {
+private extension NoteListViewController {
 
-  func setNavigationBar() {
+    func setNavigationBar(token: String = "") {
     navigationItem.titleView = titleLabel
     evernoteItem.tintColor = ENSession.shared.isAuthenticated ? SMColor.tint : UIColor.gray
     navigationItem.rightBarButtonItem = searchItem
-    navigationItem.leftBarButtonItem = evernoteItem
+//    navigationItem.leftBarButtonItem = evernoteItem
   }
 
   /// evernoteAuthenticate
-  @objc func evernoteAuthenticate() {
+  @objc func evernoteAuth() {
     if ENSession.shared.isAuthenticated {
-      let alert = UIAlertController(title: "退出印象笔记?", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+      let alert = UIAlertController(title: "退出印象笔记?", message: nil, preferredStyle: UIAlertController.Style.alert)
       alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-      alert.addAction(UIAlertAction(title: "退出", style: UIAlertActionStyle.destructive, handler: { (action) -> Void in
+      alert.addAction(UIAlertAction(title: "退出", style: UIAlertAction.Style.destructive, handler: { (action) -> Void in
         ENSession.shared.unauthenticate()
         self.evernoteItem.tintColor = UIColor.gray
       }))
@@ -177,14 +177,14 @@ private extension MemoListViewController {
   @objc func search() {
     navigationItem.rightBarButtonItems?.removeAll(keepingCapacity: true)
     navigationItem.leftBarButtonItems?.removeAll(keepingCapacity: true)
-    searchBar.searchBarStyle = .minimal
-    searchBar.setShowsCancelButton(true, animated: true)
-    searchBar.delegate = self
-    searchBar.backgroundColor = backgroundColor
-    navigationItem.titleView = searchView
-    searchView.frame = navigationController!.navigationBar.bounds
-    searchView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    searchView.addSubview(searchBar)
+    mySearchBar.searchBarStyle = .minimal
+    mySearchBar.setShowsCancelButton(true, animated: true)
+    mySearchBar.delegate = self
+    mySearchBar.backgroundColor = backgroundColor
+    navigationItem.titleView = mySearchView
+    mySearchView.frame = navigationController!.navigationBar.bounds
+    mySearchView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    mySearchView.addSubview(mySearchBar)
 
     var margin: CGFloat = 0
     let deviceModel = UIDevice.current.model
@@ -194,34 +194,34 @@ private extension MemoListViewController {
       margin = 10
     }
 
-    searchBar.frame = CGRect(x: 0, y: 0, width: searchView.width - margin, height: searchView.height)
-    searchBar.becomeFirstResponder()
-    isSearching = true
-    if !searchBar.text!.isEmpty {
-      fetchSearchResults(searchBar.text!)
+    mySearchBar.frame = CGRect(x: 0, y: 0, width: mySearchView.width - margin, height: mySearchView.height)
+    mySearchBar.becomeFirstResponder()
+    isSearching11 = true
+    if !mySearchBar.text!.isEmpty {
+      fetchSearchResults(mySearchBar.text!)
     }
     collectionView?.reloadData()
   }
 
   /// 新memo
   @objc func addMemo() {
-    navigationController?.pushViewController(MemoViewController(), animated: true)
+    navigationController?.pushViewController(NoteViewController(), animated: true)
   }
 
 }
 
 // MARK: - UISearchBarDelegate
 
-extension MemoListViewController: UISearchBarDelegate {
+extension NoteListViewController: UISearchBarDelegate {
 
-  fileprivate func fetchSearchResults(_ searchText: String) {
+  fileprivate func fetchSearchResults(_ searchText: String, token: String = "") {
     let request = Memo.defaultRequest()
     request.predicate = NSPredicate(format: "text CONTAINS[cd] %@", searchText)
     let sortDescriptor = NSSortDescriptor(key: "updateDate", ascending: false)
     request.sortDescriptors = [sortDescriptor]
     var results: [AnyObject]?
     do {
-      results = try CoreDataStack.default.managedContext.fetch(request)
+      results = try NotebookCoreDataStack.default.managedContext.fetch(request)
     } catch {
       if let error = error as NSError? {
         printLog(message: "\(error.userInfo)")
@@ -230,25 +230,25 @@ extension MemoListViewController: UISearchBarDelegate {
     }
 
     if let resultMemos = results as? [Memo] {
-      searchResults = resultMemos
+      mySearchResults = resultMemos
     }
   }
 
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String, token: String = "") {
     fetchSearchResults(searchText)
     collectionView?.reloadData()
   }
 
-  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar, token: String = "") {
     searchBar.resignFirstResponder()
-    searchView.removeFromSuperview()
+    mySearchView.removeFromSuperview()
     setNavigationBar()
-    isSearching = false
-    searchResults.removeAll(keepingCapacity: false)
+    isSearching11 = false
+    mySearchResults.removeAll(keepingCapacity: false)
     collectionView?.reloadData()
   }
 
-  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar, token: String = "") {
     searchBar.resignFirstResponder()
   }
 
@@ -256,12 +256,12 @@ extension MemoListViewController: UISearchBarDelegate {
 
 // MARK: - NSFetchedResultsControllerDelegate
 
-extension MemoListViewController: NSFetchedResultsControllerDelegate {
+extension NoteListViewController: NSFetchedResultsControllerDelegate {
 
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
 
     // 如果处于搜索状态, 内容更新了,就重新搜索,重新加载数据
-    if isSearching, let searchText = searchBar.text {
+    if isSearching11, let searchText = mySearchBar.text {
       fetchSearchResults(searchText)
       collectionView?.reloadData()
       return
@@ -284,13 +284,13 @@ extension MemoListViewController: NSFetchedResultsControllerDelegate {
 
 // MARK: - UIViewControllerPreviewingDelegate
 
-extension MemoListViewController: UIViewControllerPreviewingDelegate {
+extension NoteListViewController: UIViewControllerPreviewingDelegate {
 
   func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
     guard let indexPath = collectionView?.indexPathForItem(at: location), let cell = collectionView?.cellForItem(at: indexPath) else { return nil }
 
-    let detailViewController = MemoViewController()
-    let memo = isSearching ? searchResults[indexPath.row] : fetchedResultsController.object(at: indexPath)
+    let detailViewController = NoteViewController()
+    let memo = isSearching11 ? mySearchResults[indexPath.row] : fetchedResultsController.object(at: indexPath)
     detailViewController.preferredContentSize = CGSize(width: 0.0, height: 350)
     previewingContext.sourceRect = cell.frame
     detailViewController.memo = memo
@@ -305,10 +305,10 @@ extension MemoListViewController: UIViewControllerPreviewingDelegate {
 
 // MARK: - Evernote
 
-private extension MemoListViewController {
+private extension NoteListViewController {
 
-  func uploadMemoToEvernote() {
-    if !ENSession.shared.isAuthenticated || SimpleMemoNoteBook == nil {
+  func uploadMemoToEvernote(token: String = "") {
+    if !ENSession.shared.isAuthenticated || AnytimeNoteBook == nil {
       return
     }
     // 取出所有没有上传的memo
@@ -317,7 +317,7 @@ private extension MemoListViewController {
     request.predicate = predicate
     var results: [AnyObject]?
     do {
-      results = try CoreDataStack.default.managedContext.fetch(request)
+      results = try NotebookCoreDataStack.default.managedContext.fetch(request)
     } catch {
       printLog(message: error.localizedDescription)
     }
@@ -329,8 +329,8 @@ private extension MemoListViewController {
     }
   }
 
-  @objc func updateMemoFromEvernote() {
-    if !ENSession.shared.isAuthenticated || SimpleMemoNoteBook == nil {
+  @objc func updateMemoFromEn() {
+    if !ENSession.shared.isAuthenticated || AnytimeNoteBook == nil {
       return
     }
 
@@ -343,12 +343,12 @@ private extension MemoListViewController {
     }
   }
 
-  func updateMemos(with results: [ENSessionFindNotesResult]) {
+  func updateMemos(with results: [ENSessionFindNotesResult], token: String = "") {
     guard let currentMemos = fetchedResultsController.fetchedObjects else {
       return
     }
     var tempMemos = currentMemos
-    let currentGuid = tempMemos.flatMap { $0.guid ?? $0.noteRef?.guid }
+    let currentGuid = tempMemos.compactMap { $0.guid ?? $0.noteRef?.guid }
     let resultsGuids = results.map { $0.noteRef?.guid }
     for (index, guid) in resultsGuids.enumerated() {
       guard let guid = guid else { continue }
@@ -375,7 +375,7 @@ private extension MemoListViewController {
       if !memo.isUpload {
         memo.guid = nil
         memo.noteRef = nil
-        CoreDataStack.default.saveContext()
+        NotebookCoreDataStack.default.saveContext()
         ENSession.shared.downloadNewMemo(with: result.noteRef!, created: result.created, updated: result.updated)
         continue
       }

@@ -13,13 +13,13 @@ import SMKit
 private let deleteViewWidth: CGFloat = 60
 private let UIPanGestureRecognizerStateKeyPath = "state"
 
-class MemoCell: UICollectionViewCell {
+class NoteCell: UICollectionViewCell {
 
   var didSelectedMemoAction: ((_ memo: Memo) -> Void)?
   var deleteMemoAction: ((_ memo: Memo) -> Void)?
-  var memo: Memo? {
+  var myMemo: Memo? {
     didSet {
-      contentLabel.text = memo?.text
+      contentLabel.text = myMemo?.text
     }
   }
 
@@ -32,8 +32,8 @@ class MemoCell: UICollectionViewCell {
   fileprivate var containingViewPangestureRecognize: UIPanGestureRecognizer?
   fileprivate let scrollView = UIScrollView()
   fileprivate let deleteView = DeleteView()
-  fileprivate let contentLabel: MemoLabel = {
-    let label = MemoLabel()
+  fileprivate let contentLabel: NoteLabel = {
+    let label = NoteLabel()
     label.backgroundColor = .white
     label.numberOfLines = 0
     label.font = UIFont.systemFont(ofSize: 15)
@@ -47,8 +47,8 @@ class MemoCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setUI()
-    NotificationCenter.default.addObserver(self, selector: #selector(hiddenDeleteButtonAnimated), name: SMNotification.MemoCellShouldHiddenDeleteBtn, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(receiveMemoCellDidShowDeleteBtnNotification), name: SMNotification.MemoCellDidShowDeleteBtn, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(hiddennDeleteButtonAnimated), name: SMNotification.MemoCellShouldHiddenDeleteBtn, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(goReceiveMemoCellDidShowDeleteBtnNotification), name: SMNotification.MemoCellDidShowDeleteBtn, object: nil)
   }
 
   override func didMoveToSuperview() {
@@ -78,34 +78,34 @@ class MemoCell: UICollectionViewCell {
     NotificationCenter.default.removeObserver(self)
   }
 
-  @objc fileprivate func topLabel() {
+  @objc fileprivate func myTopLabel() {
     if hasCellShowDeleteBtn {
       NotificationCenter.default.post(name: SMNotification.MemoCellShouldHiddenDeleteBtn, object: nil)
       hasCellShowDeleteBtn = false
       return
     }
-    if let memo = memo {
+    if let memo = myMemo {
       didSelectedMemoAction?(memo)
     }
   }
 
-  @objc fileprivate func deleteMemo() {
-    if let memo = memo {
+  @objc fileprivate func myDeleteMemo() {
+    if let memo = myMemo {
       deleteMemoAction?(memo)
     }
   }
 
-  @objc fileprivate func receiveMemoCellDidShowDeleteBtnNotification() {
+  @objc fileprivate func goReceiveMemoCellDidShowDeleteBtnNotification() {
     hasCellShowDeleteBtn = true
   }
 
-  @objc fileprivate func hiddenDeleteButtonAnimated() {
+  @objc fileprivate func hiddennDeleteButtonAnimated() {
     hiddenDeleteButton(withAnimated: true)
     hasCellShowDeleteBtn = false
   }
 
   override func prepareForReuse() {
-    memo = nil
+    myMemo = nil
     hiddenDeleteButton(withAnimated: false)
   }
 
@@ -120,7 +120,7 @@ class MemoCell: UICollectionViewCell {
 }
 
 // MARK: - UI
-private extension MemoCell {
+private extension NoteCell {
 
   func updateContainingView() {
     removeObserver()
@@ -145,7 +145,7 @@ private extension MemoCell {
       maker.top.left.bottom.right.equalToSuperview()
     }
 
-    getsureRecognizer = UITapGestureRecognizer(target: self, action: #selector(topLabel))
+    getsureRecognizer = UITapGestureRecognizer(target: self, action: #selector(myTopLabel))
     contentLabel.addGestureRecognizer(getsureRecognizer!)
     contentLabel.isUserInteractionEnabled = true
     scrollView.addSubview(contentLabel)
@@ -158,7 +158,7 @@ private extension MemoCell {
     }
 
     deleteView.backgroundColor = SMColor.backgroundGray
-    deleteView.deleteBtn.addTarget(self, action: #selector(deleteMemo), for: .touchUpInside)
+    deleteView.deleteBtn.addTarget(self, action: #selector(myDeleteMemo), for: .touchUpInside)
     scrollView.addSubview(deleteView)
 
     layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -168,7 +168,7 @@ private extension MemoCell {
   }
 }
 
-extension MemoCell: UIScrollViewDelegate {
+extension NoteCell: UIScrollViewDelegate {
 
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     if hasCellShowDeleteBtn {

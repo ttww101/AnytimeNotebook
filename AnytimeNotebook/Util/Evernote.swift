@@ -10,7 +10,7 @@ import Foundation
 import EvernoteSDK
 import SMKit
 
-var SimpleMemoNoteBook: ENNotebook? {
+var AnytimeNoteBook: ENNotebook? {
   didSet {
     NotificationCenter.default.post(name: SMNotification.SimpleMemoDidSetSimpleMemoNotebook, object: nil)
   }
@@ -23,7 +23,7 @@ extension ENSession {
   func fetchSimpleMemoNoteBook() {
     if !self.isAuthenticated { return }
     if let book: ENNotebook = SMStoreClient.fetchSimpleMemoNoteBook() as? ENNotebook {
-      SimpleMemoNoteBook = book
+      AnytimeNoteBook = book
       return
     }
     if let guid = SMStoreClient.getSimpleMemoNoteBookGuid() {
@@ -34,7 +34,7 @@ extension ENSession {
   }
 
   func downloadNotesInSimpleMemoNotebook(with compeletion: ((_ notesResults: [ENSessionFindNotesResult]?, _ error: Error?) -> Void)?) {
-    findNotes(with: nil, in: SimpleMemoNoteBook, orScope: .personal, sortOrder: .recentlyUpdated, maxResults: 0) { (results, error) in
+    findNotes(with: nil, in: AnytimeNoteBook, orScope: .personal, sortOrder: .recentlyUpdated, maxResults: 0) { (results, error) in
       compeletion?(results, error)
     }
   }
@@ -63,7 +63,7 @@ extension ENSession {
 
   /// 上传便签到印象笔记
   func uploadMemoToEvernote(_ memo: Memo) {
-    guard let book = SimpleMemoNoteBook, self.isAuthenticated == true else {
+    guard let book = AnytimeNoteBook, self.isAuthenticated == true else {
       return
     }
     guard let text = memo.text, text.characters.count > 0 else {
@@ -108,7 +108,7 @@ extension ENSession {
     memo.text = enmlContent?.stringFromHTML
     memo.createDate = created
     memo.updateDate = updated
-    CoreDataStack.default.saveContext()
+    NotebookCoreDataStack.default.saveContext()
   }
 
   func updateMemo(_ memo: Memo, with note: EDAMNote) {
@@ -118,7 +118,7 @@ extension ENSession {
     memo.updateDate = updateDate
     memo.guid = note.guid
     memo.isUpload = true
-    CoreDataStack.default.saveContext()
+    NotebookCoreDataStack.default.saveContext()
   }
 
   /// 删除印象笔记中的便签
@@ -185,7 +185,7 @@ private extension ENSession {
 
   func setupSimpleMemoNotebook(with book: EDAMNotebook) {
     let notebook = ENNotebook(notebook: book)
-    SimpleMemoNoteBook = notebook
+    AnytimeNoteBook = notebook
     SMStoreClient.saveSimpleMemoNoteBook(book: notebook)
     SMStoreClient.saveSimpleMemoNoteBookGuid(with: book.guid)
   }
